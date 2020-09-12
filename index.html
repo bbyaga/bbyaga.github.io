@@ -1,0 +1,70 @@
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,700|Roboto+Condensed:700|Material+Icons" rel="stylesheet" type="text/css">
+        <link href="https:////static.bab.la/css/bab1-1822.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h5>Terms for testing:</h5>
+	api query motivated pogrom get interlokutor dwuczłonowe zdanie react-test-renderer
+	<br>
+	Kotlarska Basen AGH OKulickiego Hotel Forum Galeria Krakowska Galeria Kazimierz
+        <br><br>
+        <h5>Bookmarks:<h5>
+	<a href="javascript: (function (address) { const selection = 'Kraków ' + window.getSelection().toString(); const variant = window.prompt('IS this the righ variant?', selection); const url = address.replace('%s', variant); window.open(url, 'Search results'); })('https://www.openstreetmap.org/search?query=%s')" title="OpenStreetMap">OpenStreetMap</a>
+        <script type="text/javascript">
+            const searchEngines = {
+                'Translate': 'https://pl.bab.la/slownik/angielski-polski/%s',
+                'NPM': 'https://www.npmjs.com/package/%s',
+                'NPM search': 'https://www.npmjs.com/search?q=%s',
+                'SJP': 'https://sjp.pwn.pl/szukaj/%s.html',
+            };
+            const xhr = new XMLHttpRequest;
+            xhr.responseType = 'document';
+            xhr.onload = function(){
+                if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+                    const res = document.querySelector('#response');
+                    res.innerHTML = '';
+                    res.appendChild(xhr.response.querySelector('.page .column-wrapper .content'));
+                    res.querySelector('.quick-result-entry:last-child').remove();
+                } else {
+                    console.log('error', xhr.response);
+                }
+            }
+
+            const getTextSelection = () => {
+                return document.activeElement.getSelection();
+            }
+            const getTranslation = function(word){
+                xhr.open('get', 'https://pl.bab.la/slownik/angielski-polski/' + word);
+                xhr.send();
+            }
+            const searchNow = function(engine, searchEngines) {
+                const selection = window.getSelection().toString();
+                const url = searchEngines[engine].replace('%s', selection);
+                window.open(url, 'Search ');
+            }
+            const stringify = (object) => {
+                return object
+                    .toString()
+                    .replace(/(?:\r\n|\r|\n)/g, ' ')
+                    .replace(/ {2}/g, '');
+            }
+            const insertBookmarklets = () => {
+                for (name in searchEngines) {
+                    const link = document.createElement('a');
+                    const func = stringify(searchNow);
+                    const engines = JSON.stringify(searchEngines);
+                    link.href = 'javascript:(' + func + ')("' + name + '", ' + engines + ')';
+                    link.target = '_blank';
+                    link.innerHTML = name;
+                    document.body.appendChild(link);
+                    document.body.appendChild(document.createElement('br'));
+                }
+            }
+            insertBookmarklets();
+        </script>
+    </body>
+</html>
